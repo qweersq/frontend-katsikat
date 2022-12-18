@@ -12,6 +12,7 @@ import StatBox from "../../components/StatBox";
 import { mockDataTeam } from "../../data/mockData";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react"
+import dateFormat from 'dateformat';
 
 
 
@@ -22,20 +23,20 @@ const Dashboard = () => {
   const [shoesTransaction, setShoesTransaction] = useState([])
 
   const fetchData = async () => {
-    const response = await fetch("http://localhost:3000/shoes-transaction")
+    const response = await fetch("http://localhost:3000/order/shoes-transaction")
     const data = await response.json()
+    console.log(data)
     setShoesTransaction(data)
   }
 
   useEffect(() => {
     fetchData()
-    console.log(shoesTransaction)
   }, [])
 
   const columns = [
     { field: "id", headerName: "ID" },
     {
-      field: "customer_name",
+      field: "name",
       headerName: "Customer Name",
       flex: 1,
       cellClassName: "name-column--cell",
@@ -52,19 +53,25 @@ const Dashboard = () => {
       flex: 1,
     },
     {
-      field: "shoes_type",
-      headerName: "Due Date",
+      field: "type",
+      headerName: "Shoes Type",
       flex: 1,
     },
     {
       field: "pickup_date",
       headerName: "Pick Up date",
       flex: 1,
+      renderCell: (params) => {
+        return dateFormat(params.value, "dddd, dd mmm yyyy, h:MM TT")
+      }
     },
     {
       field: "due_date",
       headerName: "Due Date",
       flex: 1,
+      renderCell: (params) => {
+        return dateFormat(params.value, "dddd, dd mmm yyyy, h:MM TT")
+      }
     },
   ];
 
@@ -235,7 +242,7 @@ const Dashboard = () => {
       </Box>
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="auto"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -265,7 +272,7 @@ const Dashboard = () => {
         <Typography variant="h2" fontWeight={700} color={colors.grey[100]}>
           Orders List
         </Typography>
-        <DataGrid rows={shoesTransaction} columns={columns} />
+        <DataGrid autoHeight rows={shoesTransaction} columns={columns} />
       </Box>
     </Box>
   );
