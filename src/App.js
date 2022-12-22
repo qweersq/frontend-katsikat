@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
-import Team from "./scenes/team";
+import ShoesManagement from "./scenes/shoesManagement";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
@@ -30,7 +30,7 @@ function App() {
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/shoes-management" element={<Team />} />
+              <Route path="/shoes-management" element={<ShoesManagement />} />
               <Route path="/orders" element={<Contacts />} />
               <Route path="/orders-report" element={<Invoices />} />
               <Route path="/finance-management" element={<Form />} />

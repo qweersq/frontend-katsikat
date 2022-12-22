@@ -1,40 +1,35 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Button } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
+import Header from "../../components/Header";
 import ShoppingBasket from "@mui/icons-material/ShoppingBasket";
 import DirectionsBike from "@mui/icons-material/DirectionsBike";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import History from "@mui/icons-material/History";
 import DoneAll from "@mui/icons-material/DoneAll";
 import LocalShipping from "@mui/icons-material/LocalShipping";
 import AvTimer from "@mui/icons-material/AvTimer";
-import NotificationImportant from "@mui/icons-material/NotificationImportant";
 import StatBox from "../../components/StatBox";
-import { mockDataTeam } from "../../data/mockData";
-import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react"
 import dateFormat from 'dateformat';
 
 
-
-const Dashboard = () => {
+const ShoesManagement = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [shoesTransaction, setShoesTransaction] = useState([])
   const [dashboardData, setDashboardData] = useState([])
 
+  const fetchDashboardData = async () => {
+    const response = await fetch("http://localhost:3000/data/shoes-transaction")
+    const data = await response.json()
+    console.log(data)
+    setDashboardData(data)
+  }
   const fetchData = async () => {
     const response = await fetch("http://localhost:3000/order/shoes-transaction")
     const data = await response.json()
     console.log(data)
     setShoesTransaction(data)
-  }
-
-  const fetchDashboardData = async () => {
-    const response = await fetch("http://localhost:3000/data/shoes-transaction")
-    const data = await response.json()
-    console.log(data  )
-    setDashboardData(data)
   }
 
   useEffect(() => {
@@ -43,11 +38,14 @@ const Dashboard = () => {
   }, [])
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID", width: 50},
+    {
+      field: "status",
+      headerName: "Status",
+    },
     {
       field: "name",
-      headerName: "Customer Name",
-      flex: 1,
+      headerName: "Name",
       cellClassName: "name-column--cell",
     },
     {
@@ -59,17 +57,26 @@ const Dashboard = () => {
     {
       field: "address",
       headerName: "Address",
-      flex: 1,
     },
     {
       field: "type",
       headerName: "Shoes Type",
-      flex: 1,
+    },
+    {
+      field: "courier",
+      headerName: "Pick-Up Staff",
+    },
+    {
+      field: "courier1",
+      headerName: "Delivery Staff",
+    },
+    {
+      field: "cleaner",
+      headerName: "Cleaner",
     },
     {
       field: "pickup_date",
       headerName: "Pick Up date",
-      flex: 1,
       renderCell: (params) => {
         return dateFormat(params.value, "dddd, dd mmm yyyy, h:MM TT")
       }
@@ -77,20 +84,23 @@ const Dashboard = () => {
     {
       field: "due_date",
       headerName: "Due Date",
-      flex: 1,
       renderCell: (params) => {
         return dateFormat(params.value, "dddd, dd mmm yyyy, h:MM TT")
       }
+    },
+    {
+      field: "action",
+      headerName: "Action",
     },
   ];
 
   return (
     <Box m="20px">
-      {/* GRID & CHARTS */}
-      
+      <Header title="Shoes Management" subtitle="Katsikat Shoes Transaction " />
+
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
+        gridTemplateColumns="repeat(15, 1fr)"
         gridAutoRows="140px"
         gap="20px"
       >
@@ -102,9 +112,9 @@ const Dashboard = () => {
           alignItems="center"
           justifyContent="center"
         >
-          {dashboardData.map((data) => 
+
           <StatBox
-            title={data.received}
+            title="1"
             subtitle="Order Received"
             progress="0.75"
             increase="+14%"
@@ -114,50 +124,6 @@ const Dashboard = () => {
               />
             }
           />
-          )}
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {dashboardData.map((data) => 
-          <StatBox
-            title={data.process}
-            subtitle="On Proggress"
-            progress="0.50"
-            increase="+21%"
-            icon={
-              <AvTimer
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-          )}
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {dashboardData.map((data) => 
-
-          <StatBox
-            title={data.ready}
-            subtitle="Ready to Delivery"
-            progress="0.30"
-            increase="+5%"
-            icon={
-              <LocalShipping
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-          )}
 
         </Box>
         <Box
@@ -167,79 +133,8 @@ const Dashboard = () => {
           alignItems="center"
           justifyContent="center"
         >
-          {dashboardData.map((data) => 
-
           <StatBox
-            title={data.done}
-            subtitle="Done"
-            progress="0.80"
-            increase="+43%"
-            icon={
-              <DoneAll
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-          )}
-
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {dashboardData.map((data) => 
-
-          <StatBox
-            title={data.new_customer}
-            subtitle="New Customers"
-            progress="0.1"
-            increase="+90%"
-            icon={
-              <PersonAddIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-          )}
-
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {dashboardData.map((data) => 
-
-          <StatBox
-            title={data.repeat_order}
-            subtitle="Repeat Order"
-            progress="0.80"
-            increase="+43%"
-            icon={
-              <History
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-          )}
-
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {dashboardData.map((data) => 
-
-          <StatBox
-            title={data.pick_up}
+            title="8"
             subtitle="Pick-up Order"
             progress="0.80"
             increase="+43%"
@@ -249,7 +144,26 @@ const Dashboard = () => {
               />
             }
           />
-          )}
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+
+          <StatBox
+            title="1"
+            subtitle="On Proggress"
+            progress="0.50"
+            increase="+21%"
+            icon={
+              <AvTimer
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
 
         </Box>
         <Box
@@ -259,28 +173,62 @@ const Dashboard = () => {
           alignItems="center"
           justifyContent="center"
         >
-          {dashboardData.map((data) => 
+
 
           <StatBox
-            title={data.must_done}
-            subtitle="Must be Done"
-            progress="0.80"
-            increase="+43%"
+            title="2"
+            subtitle="Ready to Delivery"
+            progress="0.30"
+            increase="+5%"
             icon={
-              <NotificationImportant
+              <LocalShipping
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
-          )}
+
 
         </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
 
 
+          <StatBox
+            title="3"
+            subtitle="Done"
+            progress="0.80"
+            increase="+43%"
+            icon={
+              <DoneAll
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+      </Box>
+
+      <Box m="40px 0 0 0" display="flex" justifyContent="space-between">
+        <Typography variant="h3" sx={{ mt: "5px", fontWeight: "Bold" }}>
+          Transaction List
+        </Typography>
+        <Button variant="contained" sx={{
+          backgroundColor: colors.blueAccent[600],
+          color: colors.grey[100],
+          "&:hover": {
+            backgroundColor: colors.blueAccent[700],
+          },
+        }}>
+          Add Transaction
+        </Button>
       </Box>
       <Box
-        m="40px 0 0 0"
-        height="auto"
+        m="20px 0 0 0"
+        height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -307,13 +255,10 @@ const Dashboard = () => {
           },
         }}
       >
-        <Typography variant="h2" fontWeight={700} color={colors.grey[100]}>
-          Orders List
-        </Typography>
         <DataGrid autoHeight rows={shoesTransaction} columns={columns} />
       </Box>
     </Box>
   );
 };
 
-export default Dashboard;
+export default ShoesManagement;
