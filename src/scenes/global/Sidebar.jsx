@@ -133,26 +133,33 @@ const Sidebar = () => {
               Operasionals
             </Typography>
             <Item
-              title="Shoes Management"
-              to="/shoes-management"
+              title="Operasional"
+              to="/operasional"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
+              title="Shoes Trasactions"
+              to="/shoes-transaction"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            {/* <Item
               title="Orders"
               to="/orders"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
-            <Item
+            /> */}
+            {/* <Item
               title="Reports"
               to="/orders-report"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
 
             <Typography
               variant="h6"
