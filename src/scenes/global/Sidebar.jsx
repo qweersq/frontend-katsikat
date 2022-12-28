@@ -16,6 +16,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -171,7 +172,7 @@ const Sidebar = () => {
             <Item
               title="Finance Management"
               to="/finance-management"
-              icon={<PersonOutlinedIcon />}
+              icon={<PointOfSaleIcon />}
               selected={selected}
               setSelected={setSelected}
             />

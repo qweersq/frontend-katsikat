@@ -7,7 +7,7 @@ import ShoesManagement from "./scenes/shoesManagement";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
-import Form from "./scenes/form";
+import Form from "./scenes/financeManagement";
 import Line from "./scenes/line";
 import Pie from "./scenes/pie";
 import FAQ from "./scenes/faq";
@@ -16,6 +16,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Operasional from "./scenes/operasional";
+import FinanceManagement from "./scenes/financeManagement";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -33,9 +34,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/operasional" element={<Operasional />} />
               <Route path="/shoes-transaction" element={<ShoesManagement />} />
-              <Route path="/orders" element={<Contacts />} />
-              <Route path="/orders-report" element={<Invoices />} />
-              <Route path="/finance-management" element={<Form />} />
+              <Route path="/finance-management" element={<FinanceManagement />} />
               <Route path="/sales" element={<Bar />} />
               <Route path="/expenditure" element={<Pie />} />
               <Route path="/salary" element={<Line />} />

@@ -14,10 +14,6 @@ import TreatmentCard from "./treatment/TreatmentCard";
 import ShoesCard from "./shoes/ShoesCard";
 import StaffCard from "./staff/StaffCard";
 
-
-
-
-
 const Operasional = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
