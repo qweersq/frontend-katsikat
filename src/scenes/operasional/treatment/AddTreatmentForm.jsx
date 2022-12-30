@@ -16,6 +16,8 @@ const TreatmentFormAdd = ({ statusOpenDialogTR, handleDialogTR }) => {
     let [typeTreatmentValue, setTypeTreatmentValue] = useState("");
     let [priceTreatment, setPriceTreatment] = useState("");
     let [descriptionTreatment, setDescriptionTreatment] = useState("");
+    let [commisionTreatment, setCommisionTreatment] = useState("");
+
 
     const fetchApiCreateTreatment = async () => {
         const url = "http://localhost:3000/create/treatment";
@@ -23,6 +25,7 @@ const TreatmentFormAdd = ({ statusOpenDialogTR, handleDialogTR }) => {
             type: typeTreatmentValue,
             price: priceTreatment,
             description: descriptionTreatment,
+            commision: commisionTreatment,
         }
         await axios.post(url, data)
             .then((response) => {
@@ -75,6 +78,17 @@ const TreatmentFormAdd = ({ statusOpenDialogTR, handleDialogTR }) => {
                         variant="standard"
                         defaultValue=""
                         onChange={(e) => setDescriptionTreatment(e.target.value)}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="commision"
+                        label="Commision"
+                        type="number"
+                        fullWidth
+                        variant="standard"
+                        defaultValue=""
+                        onChange={(e) => setCommisionTreatment(e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions sx={{

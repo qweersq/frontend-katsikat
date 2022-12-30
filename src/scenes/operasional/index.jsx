@@ -183,20 +183,18 @@ const Operasional = () => {
             </Box>
             <Box sx={{ flexGrow: 1, mt: "30px" }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                    <Grid item xs={6} >
+                    <Grid item xs={8} >
                         <TreatmentCard />
                     </Grid>
-                    <Grid item xs={6} >
-                        <StaffCard />
+                    <Grid item xs={4} >
+                        <ShoesCard />
                     </Grid>
                 </Grid>
             </Box>
             <Box sx={{ flexGrow: 1, mt: "30px" }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                    <Grid item xs={4} >
-                        <ShoesCard />
-                    </Grid>
-                    <Grid item xs={6} >
+                    <Grid item xs={8} >
+                        <StaffCard />
 
                     </Grid>
                 </Grid>

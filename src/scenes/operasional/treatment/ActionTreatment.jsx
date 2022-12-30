@@ -17,6 +17,7 @@ const ActionTreatment = ({ treatmentDataId, fetchTreatmentData }) => {
     let [typeTreatmentValue, setTypeTreatmentValue] = useState("");
     let [priceTreatment, setPriceTreatment] = useState("");
     let [descriptionTreatment, setDescriptionTreatment] = useState("");
+    let [commisionTreatment, setCommisionTreatment] = useState("");
 
     //state to save data from api by id
     let [dataTreatmentById, setDataTreatmentById] = useState([])
@@ -33,6 +34,7 @@ const ActionTreatment = ({ treatmentDataId, fetchTreatmentData }) => {
         setTypeTreatmentValue(data.type)
         setPriceTreatment(data.price)
         setDescriptionTreatment(data.description)
+        setCommisionTreatment(data.commision)
         handleDialogEditTR();
     }
 
@@ -42,7 +44,8 @@ const ActionTreatment = ({ treatmentDataId, fetchTreatmentData }) => {
         const data = {
             type: typeTreatmentValue,
             price: priceTreatment,
-            description: descriptionTreatment
+            description: descriptionTreatment,
+            commision: commisionTreatment,
         }
         await axios.put(url, data)
             .then((response) => {
@@ -95,7 +98,7 @@ const ActionTreatment = ({ treatmentDataId, fetchTreatmentData }) => {
                 <DialogContent sx={{
                     backgroundColor: colors.blueAccent[900],
                 }}>
-                     <TextField
+                    <TextField
                         autoFocus
                         id="type"
                         label="Type"
@@ -104,9 +107,9 @@ const ActionTreatment = ({ treatmentDataId, fetchTreatmentData }) => {
                         fullWidth
                         defaultValue={typeTreatmentValue}
                         onChange={(e) => setTypeTreatmentValue(e.target.value)}
-                        sx={{ 
+                        sx={{
                             mt: "20px",
-                         }}
+                        }}
                     />
                     <TextField
                         autoFocus
@@ -129,6 +132,17 @@ const ActionTreatment = ({ treatmentDataId, fetchTreatmentData }) => {
                         variant="standard"
                         defaultValue={descriptionTreatment}
                         onChange={(e) => setDescriptionTreatment(e.target.value)}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="commision"
+                        label="Commision"
+                        type="number"
+                        fullWidth
+                        variant="standard"
+                        defaultValue={commisionTreatment}
+                        onChange={(e) => setCommisionTreatment(e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions sx={{

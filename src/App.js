@@ -17,6 +17,8 @@ import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Operasional from "./scenes/operasional";
 import FinanceManagement from "./scenes/financeManagement";
+import Expenditure from "./scenes/financeManagement/Expenditure";
+import Salary from "./scenes/financeManagement/Salary";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -36,8 +38,8 @@ function App() {
               <Route path="/shoes-transaction" element={<ShoesManagement />} />
               <Route path="/finance-management" element={<FinanceManagement />} />
               <Route path="/sales" element={<Bar />} />
-              <Route path="/expenditure" element={<Pie />} />
-              <Route path="/salary" element={<Line />} />
+              <Route path="/expenditure" element={<Expenditure />} />
+              <Route path="/salary" element={<Salary />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/geography" element={<Geography />} />

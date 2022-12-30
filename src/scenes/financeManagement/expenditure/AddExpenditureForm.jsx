@@ -15,6 +15,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import UploadIcon from '@mui/icons-material/Upload';
 
 
 const ExpenditureFormAdd = ({ statusOpenDialogEXP, handleDialogEXP }) => {
@@ -33,7 +34,7 @@ const ExpenditureFormAdd = ({ statusOpenDialogEXP, handleDialogEXP }) => {
     //state to save data from api
     let [staffList, setStaffList] = useState([])
 
-    const [image, setImage] = useState("https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg");
+    const [image, setImage] = useState(null);
     const [saveImage, setSaveImage] = useState(null);
     const [imageUrl, setImageUrl] = useState("Click upload button to upload image");
 
@@ -170,17 +171,18 @@ const ExpenditureFormAdd = ({ statusOpenDialogEXP, handleDialogEXP }) => {
                         </LocalizationProvider>
                     </Box>
                     <Box sx={{ display: "inline", alignItems: "right", textAlign: "center", mt: "30px" }}>
-                        <Card sx={{ maxWidth: "100%", mt: "20px" }}>
+                        <Card sx={{ maxWidth: "100%", mt: "20px", backgroundColor: colors.primary[900] }}>
                             <CardActionArea>
                                 <CardMedia
                                     component="img"
                                     height="300"
-                                    image={image}
-                                    alt="foto.png"
+                                    image={image === null ? "https://www.pngall.com/wp-content/uploads/2/Upload-PNG-Free-Image.png" : image}
+                                    alt="Image"
                                     sx={{ backgroundColor: colors.blueAccent[900], borderColor: colors.blueAccent[800], borderWidth: "2px", borderStyle: "solid" }}
-                                />
+                                >
+                                </CardMedia>
                                 <CardContent
-                                    sx={{ backgroundColor: colors.blueAccent[800], }}
+                                    sx={{ backgroundColor: colors.primary[700], }}
                                 >
                                     <Typography gutterBottom variant="h6" component="div" sx={{ fontStyle: "italic" }}>
                                         {imageUrl}

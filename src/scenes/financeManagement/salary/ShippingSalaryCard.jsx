@@ -8,23 +8,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import AddTreatmentForm from "./AddTreatmentForm";
-import ActionTreatment from "./ActionTreatment";
+import dateFormat from "dateformat";
 
 
-const TreatmentCard = () => {
+const ShippingSalaryCard = ({staffId}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     //state to save data from fetch api
-    let [treatmentData, setTreatmentData] = useState([])
+    let [shippingData, setShippingSalaryData] = useState([])
 
     //state page table
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     //state to open dialog
-    let [statusOpenDialogTR, setStatusOpenDialogTR] = useState(false);
+    let [statusOpenDialogSP, setStatusOpenDialogSP] = useState(false);
 
     //handle change page table
     const handleChangePage = (event, newPage) => {
@@ -37,46 +36,41 @@ const TreatmentCard = () => {
     };
 
     //HANDLE DIALOG 
-    const handleDialogTR = () => {
-        setStatusOpenDialogTR(!statusOpenDialogTR)
-        fetchTreatmentData()
+    const handleDialogSP = () => {
+        setStatusOpenDialogSP(!statusOpenDialogSP)
+        fetchShippingSalaryData()
     };
 
 
     //define colum table
     const columns = [
-        { id: 'id', label: 'Id' },
-        { id: 'type', label: 'Type', minWidth: 150,},
-        { id: 'price', label: 'Price' },
-        { id: 'description', label: 'Description', minWidth: 200, },
-        { id: 'commision', label: 'Commision' },
-        { id: 'action', label: "Action", minWidth: 170, },
+        { id: 'id_shipping', label: 'IdTrans' },
+        { id: 'name_staff', label: 'Staff'},
+        { id: 'milleage', label: 'Milleage'},
+        { id: 'type', label: 'Type' },
+        { id: 'date', label: 'Date'},
     ]
 
 
     //fetch data from api
-    const fetchTreatmentData = async () => {
-        const response = await fetch("http://localhost:3000/treatments")
+    const fetchShippingSalaryData = async () => {
+        const response = await fetch("http://localhost:3000/finance/salary/shipping-cost/" + staffId)
         const data = await response.json()
-        setTreatmentData(data)
+        setShippingSalaryData(data)
     }
 
 
     useEffect(() => {
-        fetchTreatmentData()
+        fetchShippingSalaryData()
     }
-        , [])
+        , [staffId])
 
     return (
         <Box>
-            <AddTreatmentForm statusOpenDialogTR={statusOpenDialogTR} handleDialogTR={handleDialogTR} />
             <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
                 <Typography variant="h4" gutterBottom component="div">
-                    Treatment
+                    Shipping Salary
                 </Typography>
-                <Button onClick={handleDialogTR} variant="contained" sx={{ backgroundColor: colors.blueAccent[700] }}>
-                    Add Treatment
-                </Button>
             </Box>
             <Paper sx={{ width: '100%', overflow: 'hidden', backgroundColor: colors.primary[600] }}>
                 <TableContainer sx={{ maxHeight: 440 }} >
@@ -95,7 +89,7 @@ const TreatmentCard = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {treatmentData
+                            {shippingData
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((item) => {
                                     return (
@@ -104,14 +98,8 @@ const TreatmentCard = () => {
                                                 const value = item[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
-                                                        {column.id === 'action' ?
-                                                            <div>
-                                                                <ActionTreatment treatmentDataId={item.id} fetchTreatmentData={fetchTreatmentData} />
-                                                            </div>
-                                                            : null}
+                                                        {column.id !== 'date' ? value : null}
+                                                        {column.id === 'date' ? dateFormat(value, "yyyy-mm-dd") : null}
                                                     </TableCell>
                                                 );
                                             })}
@@ -125,7 +113,7 @@ const TreatmentCard = () => {
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={treatmentData.length}
+                    count={shippingData.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -139,4 +127,4 @@ const TreatmentCard = () => {
 
 }
 
-export default TreatmentCard
+export default ShippingSalaryCard
