@@ -183,9 +183,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Button onClick={logout} variant="contained" color="primary" sx={{ mt: "20px" }}>
-              Logout
-            </Button>
           </Box>
         </Menu>
       </ProSidebar>
