@@ -13,6 +13,9 @@ import axios from "axios";
 import CleanerSalaryCard from "./salary/CleanerSalaryCard";
 import ShippingSalaryCard from "./salary/ShippingSalaryCard";
 import { type } from "@testing-library/user-event/dist/type";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getMe } from "../../features/authSlice";
 
 const Salary = () => {
     const theme = useTheme();
@@ -36,6 +39,25 @@ const Salary = () => {
 
     //state to save data from api
     const [staffList, setStaffList] = useState([]);
+
+    //Authencation
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { isError, user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        dispatch(getMe());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (isError) {
+            navigate("/");
+        }
+        if (user) {
+            navigate("/dashboard");
+        }
+    }, [isError, user, navigate]);
+
 
     //fetch api to get box data
     const fetchBoxData = async () => {
@@ -76,12 +98,12 @@ const Salary = () => {
     const getDataSumById = async () => {
         const response = await fetch(`http://localhost:3000/shipping-cost/sum/milleage/${staffId}`)
         const data = await response.json()
-        {data.sum_milleage_id === null ? setSumShippingId(0) : setSumShippingId(parseInt(data.sum_milleage_id) * priceRpKm)}
-        
+        { data.sum_milleage_id === null ? setSumShippingId(0) : setSumShippingId(parseInt(data.sum_milleage_id) * priceRpKm) }
+
 
         const resSumCommision = await fetch(`http://localhost:3000/finance/sum/commision/${staffId}`)
         const dataSumCommision = await resSumCommision.json()
-        {dataSumCommision.sum_commision_id === null ? setSumCommisionId(0) : setSumCommisionId(parseInt(dataSumCommision.sum_commision_id))}
+        { dataSumCommision.sum_commision_id === null ? setSumCommisionId(0) : setSumCommisionId(parseInt(dataSumCommision.sum_commision_id)) }
 
     }
 
@@ -217,7 +239,7 @@ const Salary = () => {
                     </Typography>
 
                     {staffId === null ?
-                        <Typography variant="h4" sx={{ color: colors.blueAccent[100], fontWeight: "bold", fontStyle:"italic" }}>
+                        <Typography variant="h4" sx={{ color: colors.blueAccent[100], fontWeight: "bold", fontStyle: "italic" }}>
                             Please Choose Staff
                         </Typography>
                         :

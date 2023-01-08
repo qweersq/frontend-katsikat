@@ -13,14 +13,15 @@ import ShippingCostCard from "./shippingcost/ShippingCostCard";
 import TreatmentCard from "./treatment/TreatmentCard";
 import ShoesCard from "./shoes/ShoesCard";
 import StaffCard from "./staff/StaffCard";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getMe } from "../../features/authSlice";
 
 const Operasional = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-
+    
     //state to save value at box operasional
     let [totalShipping, setTotalShipping] = useState("")
     let [totalStaff, setStaffOrder] = useState("")
@@ -28,21 +29,29 @@ const Operasional = () => {
     let [totalShoesType, setTotalShoesType] = useState("")
     let [totalCustomer, setTotalCustomer] = useState("")
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+  //Authencation
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isError, user } = useSelector((state) => state.auth);
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+    if (user) {
+      navigate("/operasional");
+    }
+  }, [isError, user, navigate]);
+
 
     //fetch api to get box data
     const fetchBoxData = async () => {
         const response = await fetch("http://localhost:3000/data/count/operasional")
         const data = await response.json()
-        console.log("DATA BOX COUNT")
-        console.log(data[1].countBox)
         setTotalShipping(data[0].countBox)
         setStaffOrder(data[1].countBox)
         setTotalTreatment(data[2].countBox)

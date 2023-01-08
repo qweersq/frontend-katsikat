@@ -15,7 +15,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import UploadIcon from '@mui/icons-material/Upload';
 
 
 const ExpenditureFormAdd = ({ statusOpenDialogEXP, handleDialogEXP }) => {
@@ -59,7 +58,6 @@ const ExpenditureFormAdd = ({ statusOpenDialogEXP, handleDialogEXP }) => {
                 )
                 .then((data) => {
                     // window.location.href = data.image;
-                    console.log(data)
                     setUrlFileEXP(data.image);
                     alert("Image uploaded successfully" + urlFileEXP);
                 });

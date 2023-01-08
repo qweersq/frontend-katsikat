@@ -12,6 +12,9 @@ import React, { useEffect, useState } from "react"
 import dateFormat from 'dateformat';
 import ActionTransaction from "./ActionTransaction";
 import AddTransactionForm from "./AddTransactionForm";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getMe } from "../../features/authSlice";
 
 const ShoesManagement = () => {
   const theme = useTheme();
@@ -24,6 +27,26 @@ const ShoesManagement = () => {
   //state to open dialog
   let [statusDialogTR, setStatusDialogTR] = useState(false)
 
+
+  //Authencation
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isError, user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [isError, user, navigate]);
+
+  
   //HANDLE
   // AddTransaction open dialog
   const handleClickOpenDialogTR = () => {

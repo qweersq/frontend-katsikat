@@ -12,6 +12,9 @@ import StatBox from "../../components/StatBox";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react"
 import dateFormat from 'dateformat';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getMe } from "../../features/authSlice";
 
 
 
@@ -22,17 +25,33 @@ const Dashboard = () => {
   const [shoesTransaction, setShoesTransaction] = useState([])
   const [dashboardData, setDashboardData] = useState([])
 
+  //Authencation
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isError, user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [isError, user, navigate]);
+
   const fetchData = async () => {
     const response = await fetch("http://localhost:3000/order/shoes-transaction")
     const data = await response.json()
-    console.log(data)
     setShoesTransaction(data)
   }
 
   const fetchDashboardData = async () => {
     const response = await fetch("http://localhost:3000/data/shoes-transaction")
     const data = await response.json()
-    console.log(data  )
     setDashboardData(data)
   }
 

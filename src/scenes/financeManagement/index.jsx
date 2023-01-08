@@ -12,6 +12,10 @@ import * as CurrencyFormat from 'react-currency-format';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import SalesCard from "./sales/SalesCard";
 import ExpenditureCard from "./expenditure/ExpenditureCard";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getMe } from "../../features/authSlice";
+
 
 const FinanceManagement = () => {
   const theme = useTheme();
@@ -21,6 +25,25 @@ const FinanceManagement = () => {
   let [balanceSaldo, setBalanceSaldo] = useState()
   let [salesAmount, setSalesAmount] = useState()
   let [expenditureAmount, setExpenditureAmount] = useState()
+
+  //Authencation
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isError, user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+    if (user) {
+      navigate("/finance-management");
+    }
+  }, [isError, user, navigate]);
+
 
   //fetch api to get box data
   const fetchBoxData = async () => {

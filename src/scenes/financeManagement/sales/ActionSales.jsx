@@ -7,7 +7,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from "axios";
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from "@mui/x-date-pickers";
@@ -24,8 +23,6 @@ const ActionSales = ({ salesDataId, fetchSalesData }) => {
     let [priceSales, setPriceSales] = useState("");
     let [dateSales, setDateSales] = useState(dayjs());
 
-    //state to save data from api by id
-    let [dataSalesById, setDataSalesById] = useState([])
 
     // state dialog openEditSL editSales
     let [statusOpenDialogEditSL, setStatusOpenDialogEditSL] = useState(false);
@@ -55,7 +52,6 @@ const ActionSales = ({ salesDataId, fetchSalesData }) => {
     const getSalesDataById = async () => {
         const response = await fetch("http://localhost:3000/finance/sales/shoes-transaction/" + salesDataId)
         const data = await response.json()
-        console.log(data)
         setNameCustomer(data.name)
         setTreatmentType(data.treatment)
         setPaymentTypeSales(data.payment)
@@ -101,7 +97,6 @@ const ActionSales = ({ salesDataId, fetchSalesData }) => {
                 }}>Add New Sales
 
                 </DialogTitle>
-
 
                 <DialogContent sx={{
                     backgroundColor: colors.blueAccent[900],
@@ -166,9 +161,9 @@ const ActionSales = ({ salesDataId, fetchSalesData }) => {
                             </MenuItem>
                         ))}
                     </TextField>
-                    <Box  sx={{
-                            mt: "20px"
-                        }}>
+                    <Box sx={{
+                        mt: "20px"
+                    }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DesktopDatePicker
                                 label="Due Date"

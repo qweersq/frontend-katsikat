@@ -3,6 +3,9 @@ import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import React, { useEffect, useState } from "react"
 import ExpenditureCard from "./expenditure/ExpenditureCard";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getMe } from "../../features/authSlice";
 
 const Expenditure = () => {
     const theme = useTheme();
@@ -12,6 +15,25 @@ const Expenditure = () => {
     let [balanceSaldo, setBalanceSaldo] = useState()
     let [salesAmount, setSalesAmount] = useState()
     let [expenditureAmount, setExpenditureAmount] = useState()
+
+    //Authencation
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { isError, user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        dispatch(getMe());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (isError) {
+            navigate("/");
+        }
+        if (user) {
+            navigate("/dashboard");
+        }
+    }, [isError, user, navigate]);
+
 
     //fetch api to get box data
     const fetchBoxData = async () => {

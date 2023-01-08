@@ -70,7 +70,6 @@ const ActionExpenditure = ({ expenditureDataId, fetchExpenditureData }) => {
                 )
                 .then((data) => {
                     // window.location.href = data.image;
-                    console.log(data)
                     alert("Image uploaded successfully");
                 });
         }
@@ -81,7 +80,6 @@ const ActionExpenditure = ({ expenditureDataId, fetchExpenditureData }) => {
     const getExpenditureDataById = async () => {
         const response = await fetch("http://localhost:3000/expenditure/" + expenditureDataId)
         const data = await response.json()
-        console.log(data)
         setNameItemEXP(data.item_name)
         setPriceItemEXP(data.price)
         setDescriptionItemEXP(data.description)
